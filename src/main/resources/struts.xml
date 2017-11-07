@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <package name="clients" extends="struts-default">
+        <default-action-ref name="home"/>
+
+        <action name="home">
+            <result name="success" type="redirect">/listClients</result>
+        </action>
+
+        <action name="listClients" class="clients.action.MainAction" method="displayClients">
+            <result name="listClients">/WEB-INF/jsp/list.jsp</result>
+        </action>
+
+        <action name="addClient" class="clients.action.ClientAction" method="execute">
+            <result name="input">/WEB-INF/jsp/create.jsp</result>
+            <result name="success">/WEB-INF/jsp/create.jsp</result>
+        </action>
+
+        <action name="saveClient" class="clients.action.ClientAction" method="saveClient">
+            <result name="success" type="redirect">/listClients</result>
+        </action>
+
+        <action name="deleteClient/*" class="clients.action.MainAction" method="deleteClient">
+            <param name="id">{1}</param>
+            <result name="success" type="redirect">/listClients</result>
+        </action>
+    </package>
+</struts>
