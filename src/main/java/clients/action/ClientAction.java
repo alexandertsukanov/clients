@@ -29,15 +29,6 @@ public class ClientAction extends ActionSupport {
         return client;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public String addClient(){
-
-        return "success";
-    }
-
     public String saveClient(){
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         client.setBirthDate(sqlDate);
