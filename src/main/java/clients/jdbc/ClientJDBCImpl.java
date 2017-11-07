@@ -20,19 +20,22 @@ public class ClientJDBCImpl implements ClientJDBC {
 
     @Override
     public List<Client> getListClient() {
-        return jdbcTemplate.query("SELECT id, firstname, lastname, email, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, sex FROM clients", new ClientMapper());
+        String sql = "SELECT id, firstname, lastname, email, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, sex FROM clients";
+        return jdbcTemplate.query(sql, new ClientMapper());
     }
 
     @Override
     @Transactional
     public void save(Client client) {
-        jdbcTemplate.update("INSERT INTO clients(firstname, lastname, email, sex, birthdate) VALUES (?,?,?,?,?)", client.getFirstName(), client.getLastName(), client.getEmail(), client.getSex(), client.getBirthDate());
+        String sql = "INSERT INTO clients(firstname, lastname, email, sex, birthdate) VALUES (?,?,?,?,?)";
+        jdbcTemplate.update(sql, client.getFirstName(), client.getLastName(), client.getEmail(), client.getSex(), client.getBirthDate());
     }
 
     @Override
     @Transactional
     public void deleteById(int id) {
-        jdbcTemplate.update("DELETE FROM clients WHERE id = ?", id);
+        String sql = "DELETE FROM clients WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     private static class ClientMapper implements RowMapper<Client> {
